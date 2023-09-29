@@ -156,6 +156,58 @@ export default Counter;
 ## Component Lifecycle:
 The component lifecycle refers to the various stages a component goes through from its creation to its destruction. Understanding these lifecycle methods is crucial for efficiently managing the behavior and state of a component throughout its lifecycle.
 
+constructor()
+
+This is the first method called when a component is instantiated. It's typically used for initializing state and binding event handlers.
+render()
+
+The render() method is called whenever a component needs to be rendered or re-rendered due to changes in state or props. It returns the JSX (UI representation) for the component.
+componentDidMount()
+
+This method is invoked immediately after a component is inserted into the DOM. It's often used to perform initial setup, fetch data from an API, or add event listeners.
+componentDidUpdate(prevProps, prevState)
+
+componentDidUpdate is called after a component's state or props have been updated, triggering a re-render. It allows you to perform actions based on changes in state or props.
+shouldComponentUpdate(nextProps, nextState)
+
+This method is called before a re-render, allowing you to optimize performance by determining if the component needs to re-render based on changes in props or state. It should return a boolean indicating whether or not to proceed with the update.
+componentWillUnmount()
+
+componentWillUnmount is invoked just before a component is removed from the DOM. It's used for cleanup tasks like removing event listeners or cancelling network requests to prevent memory leaks.
+static getDerivedStateFromProps(nextProps, prevState)
+
+Introduced in React 16.3, this method is invoked whenever the component receives new props and is used to update the component's state based on those props.
+getSnapshotBeforeUpdate(prevProps, prevState)
+
+Introduced in React 16.3, this method is called right before the most recent render is committed to the DOM. It allows you to capture information (e.g., scroll position) before a potential update.
+
+
+## Event Handling :
+These methods are responsible for responding to specific events, such as clicks or form submissions. 
+
+## Synthetjc events
+These synthetic events provide a consistent interface for handling events across different browsers. They have the same properties and methods as native events but are automatically cleaned up by React to avoid memory leaks.
+
+When you define event handlers in React, you'll often receive a synthetic event as an argument. You can access event properties like event.target and event.preventDefault() just like you would with native events.
+
+## Rendering items
+
+```bash
+import React from 'react';
+
+function ItemList({ items }) {
+  return (
+    <ul>
+      {items.map((item, index) => (
+        <li key={index}>{item}</li>
+      ))}
+    </ul>
+  );
+}
+
+export default ItemList;
+```
+
 
 
 
