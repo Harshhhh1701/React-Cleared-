@@ -2,7 +2,7 @@
 Interview purposes - Advanced react for SEO as well
 
 
-# Javascropt concepts
+# Javascript concepts
 ## Variables, Data Types, and Operators:
 
 Variables: Variables are used to store data. In JavaScript, you can declare variables using var, let, or const.
@@ -210,10 +210,145 @@ export default ItemList;
 
 
 
+## Fetching data from APIs using fetch or Axios
 
+```bash
+import React, { useEffect, useState } from 'react';
 
+function DataFetching() {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    fetch('https://api.example.com/data')
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        setLoading(false);
+      });
+  }, []);
 
+  return (
+    <div>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <ul>
+          {data.map((item) => (
+            <li key={item.id}>{item.name}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+export default DataFetching;
+```
+
+Axios
+```bash
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+
+function DataFetching() {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get('https://api.example.com/data')
+      .then((response) => {
+        setData(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        setLoading(false);
+      });
+  }, []);
+
+  return (
+    <div>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <ul>
+          {data.map((item) => (
+            <li key={item.id}>{item.name}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+export default DataFetching;
+```
+
+## Asynchronous JavaScript and Promises:
+Promises are a way to handle asynchronous operations in JavaScript. They represent a value that may not be available yet but will be resolved in the future, either with a value (fulfilled) or with an error (rejected).
+Promises have three states:
+
+Pending: Initial state, neither fulfilled nor rejected.
+Fulfilled: The operation completed successfully, and a value is available.
+Rejected: The operation failed, and an error is available.
+
+```bash
+function fetchData() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const data = { message: 'Data fetched successfully' };
+      resolve(data); // Fulfilled
+      // To simulate an error:
+      // reject(new Error('Failed to fetch data'));
+    }, 2000);
+  });
+}
+
+// Usage:
+fetchData()
+  .then((data) => {
+    console.log(data.message);
+  })
+  .catch((error) => {
+    console.error(error.message);
+  });
+```
+
+## Memoization and useCallback
+Memoization is a technique used to optimize expensive calculations or function calls by caching their results. In React, you can use the useMemo hook to memoize the result of a function or a calculation and ensure that it's only recomputed when the dependencies change.
+
+```bash
+import React, { useMemo } from 'react';
+
+function ExpensiveComponent({ data }) {
+  const result = useMemo(() => {
+    // Expensive calculation based on data
+    return performExpensiveCalculation(data);
+  }, [data]);
+
+  return <div>{result}</div>;
+}
+```
+useCallback for Memoizing Event Handlers:
+
+When you pass functions as props to child components, you can use the useCallback hook to memoize these functions. This ensures that the function reference remains the same unless its dependencies change, preventing unnecessary re-renders of child components.
+```bash
+import React, { useCallback } from 'react';
+
+function ParentComponent() {
+  const handleButtonClick = useCallback(() => {
+    // Handle button click
+  }, []);
+
+  return <ChildComponent onClick={handleButtonClick} />;
+}
+```
 
 
 
