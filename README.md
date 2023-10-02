@@ -350,8 +350,73 @@ function ParentComponent() {
 }
 ```
 
+## Code Splitting
+Code splitting is the process of breaking up your JavaScript bundle into smaller, more manageable chunks. Instead of sending all of your JavaScript code to the client in a single large file, you can split it into smaller files, which are loaded on-demand as needed. This can significantly reduce the initial loading time of your application, especially for large-scale projects.
+
+In React, code splitting can be achieved using dynamic imports, the import() function, or using Webpack's import() syntax. Here's an example of how you can do it:
+```bash
+// Before code splitting
+import ComponentA from './ComponentA';
+import ComponentB from './ComponentB';
+
+// After code splitting
+const ComponentA = React.lazy(() => import('./ComponentA'));
+const ComponentB = React.lazy(() => import('./ComponentB'));
+```
+
+## Lazy Loading
+Lazy Loading:
+Lazy loading is closely related to code splitting. It refers to the practice of loading only the necessary assets (such as JavaScript, CSS, or images) when they are needed, rather than loading everything upfront when the user initially visits the web page.
+
+Lazy loading can be applied not only to React components but also to other assets like images or stylesheets. This helps reduce the initial load time and improve the overall performance of your application.
+```bash
+import React, { lazy, Suspense } from 'react';
+
+const LazyComponent = lazy(() => import('./LazyComponent'));
+
+function App() {
+  return (
+    <div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <LazyComponent />
+      </Suspense>
+    </div>
+  );
+}
+```
+## Virtualization in react
+Virtualization involves rendering only the elements that are currently visible on the screen, rather than rendering the entire list. 
+React-virtualized:
+React-virtualized is a library for React that offers a set of high-quality components and utilities for implementing virtualization in your applications. It provides various components for efficiently rendering large lists, grids, and tables. Some of the key components and concepts in React-virtualized include:
+
+List and Grid: The List and Grid components are used to render lists and grids with virtualization. They only render the items that are currently in the viewport and recycle them as you scroll.
+
+Cell Measurer: This component helps with variable-sized items in a grid. It measures each item's size before rendering, which is useful when dealing with items of different heights or widths.
+
+AutoSizer: AutoSizer is a higher-order component that automatically resizes its child components to fit within its container. This is especially useful when the container size changes dynamically.
+
+WindowScroller: This component helps with virtualization in the case of a window-scoped list. It ensures that the list is sized correctly and scrolls with the window.
+
+InfiniteLoader: InfiniteLoader simplifies the implementation of infinite scrolling by loading more data as the user scrolls down a list.
 
 
 
+```bash
+import React from 'react';
+import { List } from 'react-virtualized';
 
+const MyList = ({ data }) => (
+  <List
+    width={300}
+    height={400}
+    rowCount={data.length}
+    rowHeight={50}
+    rowRenderer={({ index, key, style }) => (
+      <div key={key} style={style}>
+        {data[index]}
+      </div>
+    )}
+  />
+);
+```
 
